@@ -78,7 +78,7 @@ func TestGetAccountAPi(t *testing.T) {
 			// build stubs
 			tc.buildStubs(store)
 			// start test server and send req
-			server := NewServer(store)
+			server := newTestServer(t, store)
 			recorder := httptest.NewRecorder()
 			url := fmt.Sprintf("/accounts/%d", tc.acocuntID)
 			request, err := http.NewRequest(http.MethodGet, url, nil)
