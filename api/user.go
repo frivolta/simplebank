@@ -79,8 +79,8 @@ type loginUserResponse struct {
 	AccessToken           string       `json:"access_token"`
 	AccessTokenExpiresAt  time.Time    `json:"access_token_expires_at"`
 	User                  userResponse `json:"user"`
-	RefreshToken          string       `json:"refres_token"`
-	RefreshTokenExpiresAt time.Time    `json:"refres_token_expires_at"`
+	RefreshToken          string       `json:"refresh_token"`
+	RefreshTokenExpiresAt time.Time    `json:"refresh_token_expires_at"`
 }
 
 func (server *Server) loginUser(ctx *gin.Context) {
@@ -122,8 +122,8 @@ func (server *Server) loginUser(ctx *gin.Context) {
 		ID:           refreshPayload.ID,
 		Username:     user.Username,
 		RefreshToken: refreshToken,
-		UserAgent:    "",
-		ClientIp:     "",
+		UserAgent:    ctx.Request.UserAgent(),
+		ClientIp:     ctx.ClientIP(),
 		IsBlocked:    false,
 		ExpiresAt:    refreshPayload.ExpiresAt,
 	})
