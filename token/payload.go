@@ -8,10 +8,10 @@ import (
 
 // Contain payload data of the token
 type Payload struct {
-	ID       uuid.UUID `json:"id"`
-	Username string    `json:"username"`
-	IssuedAt time.Time `json"issued_at"`
-	ExpiraAt time.Time `json:"expire_at"`
+	ID        uuid.UUID `json:"id"`
+	Username  string    `json:"username"`
+	IssuedAt  time.Time `json"issued_at"`
+	ExpiresAt time.Time `json:"expire_at"`
 }
 
 var (
@@ -25,17 +25,17 @@ func NewPayload(username string, duration time.Duration) (*Payload, error) {
 		return nil, err
 	}
 	payload := &Payload{
-		ID:       tokenID,
-		Username: username,
-		IssuedAt: time.Now(),
-		ExpiraAt: time.Now().Add(duration),
+		ID:        tokenID,
+		Username:  username,
+		IssuedAt:  time.Now(),
+		ExpiresAt: time.Now().Add(duration),
 	}
 	return payload, nil
 }
 
 // checks if the token payload is valid or not
 func (payload *Payload) Valid() error {
-	if time.Now().After(payload.ExpiraAt) {
+	if time.Now().After(payload.ExpiresAt) {
 		return ErrExpiredToken
 	}
 	return nil
