@@ -59,3 +59,8 @@ echo "run db migration $DB_SOURCE"
 echo "start the app"
 exec "$@"
 ```
+
+## JQ
+```
+aws secretsmanager get-secret-value --secret-id simple_bank --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > app.env
+```
